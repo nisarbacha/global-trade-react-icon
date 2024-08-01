@@ -2,7 +2,7 @@ import React, { Suspense, lazy, ReactNode } from "react";
 import { commonCodes, ICON_TYPE, IconsType } from "./util";
 
 // Lazily load the Avatar component
-const Avatar = lazy(() => import("../assets/common/Avatar"));
+const Avatar = lazy(() => import("../resources/common/Avatar"));
 
 // Create the icons object with dynamic imports
 const createIconsObject = (
@@ -17,7 +17,7 @@ const createIconsObject = (
   return commonCodes.reduce<IconsType>(
     (acc, code) => {
       acc[code] = lazy(() =>
-        import(`../assets/${path}/${code}.tsx`).catch(() => Avatar)
+        import(`../resources/${path}/${code}.tsx`).catch(() => Avatar)
       );
       return acc;
     },

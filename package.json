@@ -3,14 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "yarn build",
-    "clean": "rimraf build"
+    "prepare": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -19,7 +18,7 @@
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "rimraf": "5.0.10"
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "keywords": [
     "Forex",
@@ -28,13 +27,11 @@
     "Commodities",
     "Indices",
     "MarketIcons",
-    "TradeIcons Pack",
-    "FinanceIcons Suite",
-    "InvestIcons Collection",
-    "EconIcons Bundle",
-    "AllMarkets Icons",
-    "FinTech Icon Set",
-    "GlobalTrade Icons"
+    "TradeIcons",
+    "FinanceIcons",
+    "InvestIcons",
+    "AllMarkets",
+    "GlobalTrade"
   ],
   "author": "Nisar Ahmad <nisarbacha@gmail.com>",
   "license": "MIT",
@@ -48,13 +45,13 @@
   "devDependencies": {
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.15.0",
-    "@typescript-eslint/parser": "^7.15.0",
+    "@typescript-eslint/eslint-plugin": "8.0.0",
+    "@typescript-eslint/parser": "8.0.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^8.57.0",
+    "eslint": "9.8.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
-    "typescript": "^5.2.2",
+    "typescript": "^5.5.4",
     "vite": "^5.3.4"
   }
 }
