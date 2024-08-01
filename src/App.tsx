@@ -5,7 +5,7 @@ export default function App() {
   return (
     <TradeFlagIcon
       type={ICON_TYPE.CRYPTO}
-      icon="usdcco"
+      icon="WIF"
       style={{ width: "30px", height: "30px" }}
     />
   );
