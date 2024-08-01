@@ -2,7 +2,8 @@
   "name": "global-trade-react-icon",
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
