@@ -1,6 +1,5 @@
 {
   "name": "global-trade-react-icon",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "main": "dist/index.js",
