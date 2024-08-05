@@ -1,10 +1,26 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
+import dts from "vite-plugin-dts";
+import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
   build: {
-    outDir: "dist",
-    emptyOutDir: true, // Ensures the output directory is cleaned before build
+    lib: {
+      entry: path.resolve(__dirname, "index.ts"),
+      name: "GlobalTreadReactIcon",
+      fileName: (format) => `index.${format}.js`,
+    },
+    rollupOptions: {
+      external: ["react", "react-dom"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
+    },
+    sourcemap: true,
+    emptyOutDir: true,
   },
+  plugins: [react(), dts()],
 });

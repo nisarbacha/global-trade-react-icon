@@ -1,24 +1,14 @@
 import React, { Suspense, lazy, ReactNode } from "react";
-import { commonCodes, ICON_TYPE, IconsType } from "./util";
+import { commonCodes, IconsType } from "./util";
 
 // Lazily load the Avatar component
-const Avatar = lazy(() => import("../resources/common/Avatar"));
+const Avatar = lazy(() => import("./Icons/Avatar"));
 
 // Create the icons object with dynamic imports
-const createIconsObject = (
-  type:
-    | ICON_TYPE.COMMODITIES
-    | ICON_TYPE.CRYPTO
-    | ICON_TYPE.FOREX
-    | ICON_TYPE.METALS
-    | ICON_TYPE.common
-): IconsType => {
-  const path = type === "forex" ? "forex" : "common";
+const createIconsObject = () => {
   return commonCodes.reduce<IconsType>(
     (acc, code) => {
-      acc[code] = lazy(() =>
-        import(`../resources/${path}/${code}.tsx`).catch(() => Avatar)
-      );
+      acc[code] = lazy(() => import(`./Icons/${code}.tsx`).catch(() => Avatar));
       return acc;
     },
     { Avatar }
@@ -27,70 +17,57 @@ const createIconsObject = (
 
 export interface Props {
   icon: string;
-  type:
-    | ICON_TYPE.COMMODITIES
-    | ICON_TYPE.CRYPTO
-    | ICON_TYPE.FOREX
-    | ICON_TYPE.METALS
-    | ICON_TYPE.common;
   className?: string;
   style?: React.CSSProperties;
 }
 
-const TradeFlagIcon: React.FC<Props> = ({ icon, type, className, style }) => {
+const TradeFlagIcon: React.FC<Props> = ({ icon, className, style }) => {
   // Normalize the icon string to uppercase
   const iconString = icon.toUpperCase();
 
   // Create the icons object based on the type
-  const icons = createIconsObject(type);
+  const icons = createIconsObject();
 
   // Determine the chunk size based on the type
   let chunks: string[] = [];
-  if (type === "forex" || type === "commodities") {
-    // Forex logic: Split into chunks of 3 characters
-    chunks =
-      iconString.length > 3
-        ? [iconString.slice(0, 3), iconString.slice(3, 6)]
-        : [iconString];
-  } else if (type === "crypto") {
-    // Crypto logic: Check for valid codes and split accordingly
-    let i = 0;
-    while (i < iconString.length) {
-      let matched = false;
-      for (const size of [2, 3, 4, 5, 6]) {
-        if (i + size <= iconString.length) {
-          const part = iconString.slice(i, i + size);
-          if (commonCodes.includes(part)) {
-            chunks.push(part);
-            i += size;
-            matched = true;
+
+  // Crypto logic: Check for valid codes and split accordingly
+  let i = 0;
+  while (i < iconString.length) {
+    let matched = false;
+    for (const size of [2, 3, 4, 5, 6]) {
+      if (i + size <= iconString.length) {
+        const part = iconString.slice(i, i + size);
+        if (commonCodes.includes(part)) {
+          chunks.push(part);
+          i += size;
+          matched = true;
+          break;
+        }
+      }
+    }
+    if (!matched) {
+      let unrecognizedPart = iconString[i];
+      i += 1;
+      while (i < iconString.length) {
+        let nextPart = iconString.slice(i, i + 1);
+        for (const size of [2, 3, 4, 5, 6]) {
+          if (
+            i + size <= iconString.length &&
+            commonCodes.includes(iconString.slice(i, i + size))
+          ) {
+            nextPart = "";
             break;
           }
         }
-      }
-      if (!matched) {
-        let unrecognizedPart = iconString[i];
-        i += 1;
-        while (i < iconString.length) {
-          let nextPart = iconString.slice(i, i + 1);
-          for (const size of [2, 3, 4, 5, 6]) {
-            if (
-              i + size <= iconString.length &&
-              commonCodes.includes(iconString.slice(i, i + size))
-            ) {
-              nextPart = "";
-              break;
-            }
-          }
-          if (nextPart) {
-            unrecognizedPart += nextPart;
-            i += 1;
-          } else {
-            break;
-          }
+        if (nextPart) {
+          unrecognizedPart += nextPart;
+          i += 1;
+        } else {
+          break;
         }
-        chunks.push(unrecognizedPart);
       }
+      chunks.push(unrecognizedPart);
     }
   }
 

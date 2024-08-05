@@ -624,11 +624,3 @@ type IconComponentType = React.FC<IconProps>;
 export type IconsType = {
   [key: string]: React.LazyExoticComponent<IconComponentType>;
 };
-
-export enum ICON_TYPE {
-  "FOREX" = "forex",
-  "CRYPTO" = "crypto",
-  "COMMODITIES" = "commodities",
-  "METALS" = "metals",
-  "common" = "common",
-}
